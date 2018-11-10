@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.estore.dao.VisitLogMapper" >
+  <resultMap id="BaseResultMap" type="com.estore.bean.VisitLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="visit_date" property="visitDate" jdbcType="DATE" />
+    <result column="visit_time" property="visitTime" jdbcType="TIME" />
+    <result column="visit_ip" property="visitIp" jdbcType="VARCHAR" />
+    <result column="visit_for" property="visitFor" jdbcType="VARCHAR" />
+    <result column="application" property="application" jdbcType="VARCHAR" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, visit_date, visit_time, visit_ip, visit_for, application, note
+  </sql>
+  
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.estore.bean.VisitLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from visit_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  <select id="selectAllGorupByIp" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from visit_log group by visit_ip
+   
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from visit_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from visit_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.estore.bean.VisitLogExample" >
+    delete from visit_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.estore.bean.VisitLog" >
+    insert into visit_log (id, visit_date, visit_time, 
+      visit_ip, visit_for, application, 
+      note)
+    values (#{id,jdbcType=INTEGER}, #{visitDate,jdbcType=DATE}, #{visitTime,jdbcType=TIME}, 
+      #{visitIp,jdbcType=VARCHAR}, #{visitFor,jdbcType=VARCHAR}, #{application,jdbcType=VARCHAR}, 
+      #{note,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.estore.bean.VisitLog" >
+    insert into visit_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="visitDate != null" >
+        visit_date,
+      </if>
+      <if test="visitTime != null" >
+        visit_time,
+      </if>
+      <if test="visitIp != null" >
+        visit_ip,
+      </if>
+      <if test="visitFor != null" >
+        visit_for,
+      </if>
+      <if test="application != null" >
+        application,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="visitDate != null" >
+        #{visitDate,jdbcType=DATE},
+      </if>
+      <if test="visitTime != null" >
+        #{visitTime,jdbcType=TIME},
+      </if>
+      <if test="visitIp != null" >
+        #{visitIp,jdbcType=VARCHAR},
+      </if>
+      <if test="visitFor != null" >
+        #{visitFor,jdbcType=VARCHAR},
+      </if>
+      <if test="application != null" >
+        #{application,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.estore.bean.VisitLogExample" resultType="java.lang.Integer" >
+    select count(*) from visit_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update visit_log
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.visitDate != null" >
+        visit_date = #{record.visitDate,jdbcType=DATE},
+      </if>
+      <if test="record.visitTime != null" >
+        visit_time = #{record.visitTime,jdbcType=TIME},
+      </if>
+      <if test="record.visitIp != null" >
+        visit_ip = #{record.visitIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.visitFor != null" >
+        visit_for = #{record.visitFor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.application != null" >
+        application = #{record.application,jdbcType=VARCHAR},
+      </if>
+      <if test="record.note != null" >
+        note = #{record.note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update visit_log
+    set id = #{record.id,jdbcType=INTEGER},
+      visit_date = #{record.visitDate,jdbcType=DATE},
+      visit_time = #{record.visitTime,jdbcType=TIME},
+      visit_ip = #{record.visitIp,jdbcType=VARCHAR},
+      visit_for = #{record.visitFor,jdbcType=VARCHAR},
+      application = #{record.application,jdbcType=VARCHAR},
+      note = #{record.note,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.estore.bean.VisitLog" >
+    update visit_log
+    <set >
+      <if test="visitDate != null" >
+        visit_date = #{visitDate,jdbcType=DATE},
+      </if>
+      <if test="visitTime != null" >
+        visit_time = #{visitTime,jdbcType=TIME},
+      </if>
+      <if test="visitIp != null" >
+        visit_ip = #{visitIp,jdbcType=VARCHAR},
+      </if>
+      <if test="visitFor != null" >
+        visit_for = #{visitFor,jdbcType=VARCHAR},
+      </if>
+      <if test="application != null" >
+        application = #{application,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.estore.bean.VisitLog" >
+    update visit_log
+    set visit_date = #{visitDate,jdbcType=DATE},
+      visit_time = #{visitTime,jdbcType=TIME},
+      visit_ip = #{visitIp,jdbcType=VARCHAR},
+      visit_for = #{visitFor,jdbcType=VARCHAR},
+      application = #{application,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

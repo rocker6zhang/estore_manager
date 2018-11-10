@@ -1,0 +1,50 @@
+
+	html,body{height:100%;overflow:visible;}
+	html{height:100%;overflow:hidden;}
+
+
+	
+	#div1{
+		background:black;
+		width:180px;
+		height:100%;
+		margin-left:10px;
+	
+		
+	
+	}
+	#header{
+		background-color:red;
+		background-image:url("nav_bg1e9c5d.gif");
+		height:100px;
+		width:168px;
+		background-position:0% 0%;
+		margin:auto;
+		
+	}
+	.batten{
+	background:;
+		width:158px;
+		height:24px;
+		margin:8px ;
+		margin-left:5px;
+		color:white;
+		
+	}
+	.sepline {
+		border-top: 1px solid #71af84;
+	}
+	hr{
+		
+		color:red;
+	}
+	#body{
+		background:pink;
+		height:100%;
+		width:168px;
+		margin:auto;
+		
+	}
+	#footer{
+	
+	}

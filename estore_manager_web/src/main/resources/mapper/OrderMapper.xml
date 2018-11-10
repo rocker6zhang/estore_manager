@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.estore.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.estore.bean.Order" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="pay" property="pay" jdbcType="INTEGER" />
+    <result column="createDate" property="createdate" jdbcType="DATE" />
+    <result column="receipt" property="receipt" jdbcType="INTEGER" />
+    <result column="address" property="address" jdbcType="CHAR" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_id, pay, createDate, receipt, address, price
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.estore.bean.OrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from order_
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from order_
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.estore.bean.OrderExample" >
+    delete from order_
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.estore.bean.Order" >
+    insert into order_ (id, user_id, pay, 
+      createDate, receipt, address, 
+      price)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{pay,jdbcType=INTEGER}, 
+      #{createdate,jdbcType=DATE}, #{receipt,jdbcType=INTEGER}, #{address,jdbcType=CHAR}, 
+      #{price,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.estore.bean.Order" >
+    insert into order_
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="pay != null" >
+        pay,
+      </if>
+      <if test="createdate != null" >
+        createDate,
+      </if>
+      <if test="receipt != null" >
+        receipt,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="pay != null" >
+        #{pay,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=DATE},
+      </if>
+      <if test="receipt != null" >
+        #{receipt,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=CHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.estore.bean.OrderExample" resultType="java.lang.Integer" >
+    select count(*) from order_
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update order_
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pay != null" >
+        pay = #{record.pay,jdbcType=INTEGER},
+      </if>
+      <if test="record.createdate != null" >
+        createDate = #{record.createdate,jdbcType=DATE},
+      </if>
+      <if test="record.receipt != null" >
+        receipt = #{record.receipt,jdbcType=INTEGER},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=CHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update order_
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      pay = #{record.pay,jdbcType=INTEGER},
+      createDate = #{record.createdate,jdbcType=DATE},
+      receipt = #{record.receipt,jdbcType=INTEGER},
+      address = #{record.address,jdbcType=CHAR},
+      price = #{record.price,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.estore.bean.Order" >
+    update order_
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="pay != null" >
+        pay = #{pay,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=DATE},
+      </if>
+      <if test="receipt != null" >
+        receipt = #{receipt,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=CHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.estore.bean.Order" >
+    update order_
+    set user_id = #{userId,jdbcType=INTEGER},
+      pay = #{pay,jdbcType=INTEGER},
+      createDate = #{createdate,jdbcType=DATE},
+      receipt = #{receipt,jdbcType=INTEGER},
+      address = #{address,jdbcType=CHAR},
+      price = #{price,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,15 @@
+com\estore\dao\ProposalMapper.class
+com\estore\dao\ProductImgMapper.class
+com\estore\dao\impl\JedisClientSingle.class
+com\estore\dao\PageElementShowMapper.class
+com\estore\dao\ProductCategoryMapper.class
+com\estore\dao\UserMapper.class
+com\estore\dao\VisitLogMapper.class
+com\estore\dao\OrderMapper.class
+com\estore\dao\PageElementCategoryMapper.class
+com\estore\dao\JedisClient.class
+com\estore\dao\ProductMapper.class
+com\estore\dao\CartMapper.class
+com\estore\dao\PageElementMapper.class
+com\estore\dao\impl\JedisClientCluster.class
+com\estore\dao\OrderitemMapper.class

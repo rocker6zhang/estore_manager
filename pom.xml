@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.estore</groupId>
+    <artifactId>estore_parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>com.estore</groupId>
+  <artifactId>estore_manager</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  
+  <!-- 依赖管理 -->
+	<dependencies>
+		<dependency>
+			<groupId>com.estore</groupId>
+			<artifactId>estore_common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<!-- Jackson Json处理工具包 -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+			</dependency>
+		
+	</dependencies>
+  
+  
+	<modules>
+		<module>estore_manager_pojo</module>
+		<module>estore_manager_mapper</module>
+		<module>estore_manager_service</module>
+		<module>estore_manager_web</module>
+		<module>test</module>
+	</modules>
+	
+	<build>
+		<!-- 配置插件 -->
+		<plugins>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<configuration>
+					<port>8081</port>
+					<path>/manager</path>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+	
+</project>

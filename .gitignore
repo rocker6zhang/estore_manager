@@ -1,0 +1,20 @@
+##############################
+## Folders                  ##
+##############################
+.settings
+upload
+
+##############################
+## Netbeans conf            ##
+##############################
+note
+.classpath
+.project
+c3p0-config.xml
+my.properties
+dbconfig.properties
+*.war
+*.png
+*.jpg
+
+ 

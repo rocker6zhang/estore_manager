@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.estore.dao.ProposalMapper" >
+  <resultMap id="BaseResultMap" type="com.estore.bean.Proposal" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="subject" property="subject" jdbcType="VARCHAR" />
+    <result column="proposal_person" property="proposalPerson" jdbcType="VARCHAR" />
+    <result column="application" property="application" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, content, subject, proposal_person, application
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.estore.bean.ProposalExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from proposal
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from proposal
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from proposal
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.estore.bean.ProposalExample" >
+    delete from proposal
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.estore.bean.Proposal" >
+    insert into proposal (id, content, subject, 
+      proposal_person, application)
+    values (#{id,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}, 
+      #{proposalPerson,jdbcType=VARCHAR}, #{application,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.estore.bean.Proposal" >
+    insert into proposal
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="subject != null" >
+        subject,
+      </if>
+      <if test="proposalPerson != null" >
+        proposal_person,
+      </if>
+      <if test="application != null" >
+        application,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="subject != null" >
+        #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="proposalPerson != null" >
+        #{proposalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="application != null" >
+        #{application,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.estore.bean.ProposalExample" resultType="java.lang.Integer" >
+    select count(*) from proposal
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update proposal
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subject != null" >
+        subject = #{record.subject,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proposalPerson != null" >
+        proposal_person = #{record.proposalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.application != null" >
+        application = #{record.application,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update proposal
+    set id = #{record.id,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=VARCHAR},
+      subject = #{record.subject,jdbcType=VARCHAR},
+      proposal_person = #{record.proposalPerson,jdbcType=VARCHAR},
+      application = #{record.application,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.estore.bean.Proposal" >
+    update proposal
+    <set >
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="subject != null" >
+        subject = #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="proposalPerson != null" >
+        proposal_person = #{proposalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="application != null" >
+        application = #{application,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.estore.bean.Proposal" >
+    update proposal
+    set content = #{content,jdbcType=VARCHAR},
+      subject = #{subject,jdbcType=VARCHAR},
+      proposal_person = #{proposalPerson,jdbcType=VARCHAR},
+      application = #{application,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

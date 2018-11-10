@@ -1,0 +1,251 @@
+<html>
+<head>
+    <title>用户列表</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script language="javascript" src="../style/js/jquery-1.4.2.js"></script>
+	<script language="javascript" src="../style/js/jquery-ztree-2.5.js"></script>
+	<link rel="stylesheet" href="../style/zTreeStyle/zTreeStyle.css" type="text/css">
+    <script language="javascript" src="../script/pageCommon.js" charset="utf-8"></script>
+    <script language="javascript" src="../script/PageUtils.js" charset="utf-8"></script>
+    <script language="javascript" src="../script/DemoData.js" charset="utf-8"></script>
+	
+    <link type="text/css" rel="stylesheet" href="../style/blue/pageCommon.css" />
+    <script type="text/javascript">
+    </script>
+    
+    <script type="text/javascript" src="/OA/static/js/jquery-1.12.4.min.js"></script>
+    <link href="/OA/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="/OA/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	<script src="/OA/static/js/user_build.js"></script>
+    
+    <!-- 最后加载 -->
+    <script language="javascript" src="../script/DataShowManager.js" charset="utf-8"></script>
+	<script language="javascript" src="../style/js/privilegeData.js" charset="utf-8"></script>
+	<script language="javascript" src="../style/js/privilegeTree.js" charset="utf-8"></script>
+    
+</head>
+<body>
+
+<!-- Modal 用户 crud 模态框 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">用户更新</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+        
+        <div class="form-group">
+		    <label for="inputEmail3" class="col-sm-2 control-label">职工姓名</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" name="name" id="u_name"  placeholder="name">
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="inputEmail3" class="col-sm-2 control-label">部门</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" name="department" id="u_department"  placeholder="部门名称">
+		    </div>
+		  </div>
+        
+		  <div class="form-group">
+		    <label for="inputEmail3" class="col-sm-2 control-label">登录名称</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" name="loginName" id="u_loginName"  placeholder="login名称">
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="inputEmail3" class="col-sm-2 control-label">登录密码</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" name="password" id="u_password"  placeholder="password">
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="inputPassword3" class="col-sm-2 control-label">备注</label>
+		    <div class="col-sm-10">
+		    	<textarea class="form-control" name="description" id="u_description"  placeholder="说明"></textarea>
+		     	<input type="hidden" class="form-control" name="id" id="r_id" value="">
+		    </div>
+		  </div>
+		  
+		  
+		   <div class="form-group">
+		    <label for="inputPassword3" class="col-sm-2 control-label"></label>
+		    <div class="col-sm-10">
+		      <p id="add_msg"></p>
+		    </div>
+		    
+		  </div>
+		  
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="u_submit" onclick="add()">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal 用户 role操作 模态框 -->
+<div class="modal fade" id="role_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">用户职位</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+        
+        <div class="form-group">
+		    <label for="inputEmail3" class="col-sm-2 control-label">职工姓名</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" name="name" id="u_role_name"  placeholder="name" readonly>
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="inputEmail3" class="col-sm-2 control-label">部门</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" name="department" id="u_role_department"  placeholder="部门名称" readonly>
+		    </div>
+		  </div>
+        
+		  <div class="form-group">
+		    <label for="inputPassword3" class="col-sm-2 control-label">备注</label>
+		    <div class="col-sm-10">
+		    	<textarea class="form-control" name="description" id="u_role_description"  placeholder="说明" readonly></textarea>
+		     	<input type="hidden" class="form-control" name="id" id="u_role_id" value="">
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		  <label for="inputPassword3" class="col-sm-2 control-label">职位</label>
+		    <div class="col-sm-offset-2 col-sm-10">
+		      <div class="checkbox">
+		        <label id="role_checkbox">
+		          
+		      <!--      <input type="checkbox">Remember me &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		           <input type="checkbox">Remember me &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+		           <input type="checkbox">Remember me &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		           <input type="checkbox">Remember me &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		           <input type="checkbox">Remember me &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+		           <input type="checkbox">Remember me &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		           <input type="checkbox">Remember me &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		           <input type="checkbox">Remember me &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+		           <input type="checkbox">Remember me &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		           <input type="checkbox">Remember me &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		           <input type="checkbox">Remember me &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/> -->
+		        </label>
+		      </div>
+		    </div>
+		  </div>
+		  
+		   <div class="form-group">
+		    <label for="inputPassword3" class="col-sm-2 control-label"></label>
+		    <div class="col-sm-10">
+		      <p id="role_msg"></p>
+		    </div>
+		  </div>
+		   <!--
+		  <div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+		      <button type="submit" class="btn btn-default">Sign in</button>
+		    </div>
+		  </div>
+		  -->
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="r_submit" onclick="">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div id="Title_bar">
+    <div id="Title_bar_Head"> 
+        <div id="Title_Head"></div>
+        <div id="Title"><!--页面标题-->
+            <img border="0" width="13" height="13" src="../style/images/title_arrow.gif"/> 用户管理
+        </div>
+        <div id="Title_End"></div>
+    </div>
+</div>
+
+<div id="MainArea">
+    <table cellspacing="0" cellpadding="0" class="TableStyle">
+       
+        <!-- 表头-->
+        <thead>
+            <tr align=center valign=middle id=TableTitle>
+                <td width="100">登录名</td>
+                <td width="100">姓名</td>
+                <td width="100">所属部门</td>
+                <td>备注</td>
+                <td>相关操作</td>
+            </tr>
+        </thead>
+        
+        <!--显示数据列表-->
+        <tbody id="TableData" class="dataContainer" datakey="userList">
+            <!-- <tr class="TableDetail1 template">
+                <td>${user.loginName}</td>
+                <td>${user.name}</td>
+                <td>${user.department}</td>
+                <td>${user.description}</td>
+                <td>
+					<button type="button" class="btn btn-primary btn-xs" onclick="remove(${id})"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删除</button>
+					<button type="button" class="btn btn-primary btn-xs" onclick="update_page(${id})"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 修改</button> 
+					<button type="button" class="btn btn-primary btn-xs" onclick="privilegeclick()"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 设置权限</button>
+				</td>
+            </tr> -->
+        </tbody>
+    </table>
+    
+          <!-- 其他功能超链接 -->
+    <div id="TableTail">
+        <div id="TableTail_inside">
+            <button type="button" class="btn btn-primary btn-xs" onclick="add_page()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加</button>
+        </div>
+    </div>
+    
+     <!-- 分页信息-->
+     
+     <div class="row">
+			<div class="col-md-4" id="page_info"></div>
+			<div class="col-md-2"></div>
+			<div class="col-md-6" id="page_nav_area">
+					
+			</div>
+						
+	</div>
+    
+   
+        
+    
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

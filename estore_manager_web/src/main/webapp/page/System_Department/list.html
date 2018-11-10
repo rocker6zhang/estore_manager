@@ -1,0 +1,173 @@
+<html>
+<head>
+    <title>部门列表</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script language="javascript" src="../script/jquery.js"></script>
+    <script language="javascript" src="../script/pageCommon.js" charset="utf-8"></script>
+    <script language="javascript" src="../script/PageUtils.js" charset="utf-8"></script>
+    <script language="javascript" src="../script/DemoData.js" charset="utf-8"></script>
+   
+    <link type="text/css" rel="stylesheet" href="../style/blue/pageCommon.css" />
+    <script type="text/javascript"></script>
+    
+     
+    <script type="text/javascript" src="/OA/static/js/jquery-1.12.4.min.js"></script>
+    <link href="/OA/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="/OA/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	<script src="/OA/static/js/department_build.js"></script>
+	
+	 						   
+	
+	<!-- 页面初始化后要调用,  放在最后加载,   应为他要依赖前面的 script code -->
+	<script language="javascript" src="../script/DataShowManager.js" charset="utf-8"></script>
+    
+    
+    
+</head>
+<body>
+
+<!-- Modal 模态框 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">添加部门</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+        
+		  <div class="form-group">
+		    <label for="inputEmail3" class="col-sm-2 control-label">部门名称</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" name="name" id="r_name"  placeholder="名称">
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="inputEmail3" class="col-sm-2 control-label">上级部门名称</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" name="parentName" id="r_parentName"  placeholder="名称">
+		    </div>
+		  </div>
+		  
+		  
+		  <div class="form-group">
+		    <label for="inputPassword3" class="col-sm-2 control-label">部门说明</label>
+		    <div class="col-sm-10">
+		    	<textarea class="form-control" name="description" id="r_description"  placeholder="说明"></textarea>
+		     	<input type="hidden" class="form-control" name="id" id="r_id" value="">
+		    </div>
+		  </div>
+		  
+		  
+		   <div class="form-group">
+		    <label for="inputPassword3" class="col-sm-2 control-label"></label>
+		    <div class="col-sm-10">
+		      <p id="add_msg"></p>
+		    </div>
+		    
+		  </div>
+		  <!-- 
+		  <div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+		      <div class="checkbox">
+		        <label>
+		          <input type="checkbox"> Remember me
+		        </label>
+		      </div>
+		    </div>
+		  </div>
+		   -->
+		   <!--
+		  <div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+		      <button type="submit" class="btn btn-default">Sign in</button>
+		    </div>
+		  </div>
+		  -->
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="r_submit" onclick="add()">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+ 
+<div id="Title_bar">
+    <div id="Title_bar_Head">
+        <div id="Title_Head"></div>
+        <div id="Title"><!--页面标题-->
+            <img border="0" width="13" height="13" src="../style/images/title_arrow.gif"/> 部门管理
+        </div>
+        <div id="Title_End"></div>
+    </div>
+</div>
+
+<div id="MainArea">
+    <table cellspacing="0" cellpadding="0" class="TableStyle">
+       
+        <!-- 表头-->
+        <thead>
+            <tr align=center valign=middle id=TableTitle>
+            	<td width="150px">部门名称</td>
+				<td width="150px">上级部门名称</td>
+				<td width="200px">职能说明</td>
+				<td>相关操作</td>
+            </tr>
+        </thead>
+
+		<!--显示数据列表-->
+        <tbody id="TableData" class="dataContainer" datakey="departmentList">
+			<!-- <tr class="TableDetail1 template">
+				<td><a href="_list_level2.html">${department.name}</a>&nbsp;</td>
+				<td>${department.parent.name}&nbsp;</td>
+				<td>${department.description}&nbsp;</td>
+				
+				<td>
+					<button type="button" class="btn btn-primary btn-xs" onclick="remove(${id})"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删除</button>
+					<button type="button" class="btn btn-primary btn-xs" onclick="update_page(${id})"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 修改</button>
+				</td>
+			</tr> -->
+        </tbody>
+    </table>
+    
+     
+    <!-- 其他功能超链接 -->
+    <div id="TableTail">
+        <div id="TableTail_inside">
+            <button type="button" class="btn btn-primary btn-xs" onclick="add_page()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加</button>
+        </div>
+    </div>
+    
+     <!-- 分页信息-->
+     
+     <div class="row">
+			<div class="col-md-4" id="page_info"></div>
+			<div class="col-md-2"></div>
+			<div class="col-md-6" id="page_nav_area">
+					
+			</div>
+						
+	</div>
+    
+    
+    
+    
+</div>
+
+<!--说明-->	
+<div id="Description"> 
+	说明：<br />
+	1，列表页面只显示一层的（同级的）部门数据，默认显示最顶级的部门列表。<br />
+	2，点击部门名称，可以查看此部门相应的下级部门列表。<br />
+	3，删除部门时，同时删除此部门的所有下级部门。
+</div>
+
+</body>
+</html>

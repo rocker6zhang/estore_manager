@@ -1,0 +1,249 @@
+<html>
+<head>
+<title>商品管理</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script language="javascript" src="../../script/jquery.js"></script>
+<script language="javascript" src="../../script/pageCommon.js" charset="utf-8"></script>
+<script language="javascript" src="../../script/PageUtils.js" charset="utf-8"></script>
+<script language="javascript" src="../../script/DemoData.js" charset="utf-8"></script>
+
+<link type="text/css" rel="stylesheet" href="../../style/blue/pageCommon.css" />
+<script type="text/javascript"></script>
+
+
+<script type="text/javascript" src="http://47.104.191.132:8089/js/jquery-1.12.4.min.js"></script>
+<link href="http://47.104.191.132:8089/css/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="http://47.104.191.132:8089/css/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
+<script src="http://47.104.191.132:8089/store_manager/js/product.js"></script>
+<script src="http://47.104.191.132:8089/js/common_utils.js"></script>
+<script src="http://47.104.191.132:8089/store_manager/js/store_manager_common.js"></script>
+
+
+
+<!-- 页面初始化后要调用,  放在最后加载,   应为他要依赖前面的 script code -->
+<script language="javascript" src="../../script/DataShowManager.js" charset="utf-8"></script>
+
+
+
+</head>
+<body>
+
+	<!-- Modal 模态框 -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">添加商品</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" id="save_from">
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">商品名称</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="name" id="m_name"
+									placeholder="名称">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">分类名称</label>
+							<div class="col-sm-10">
+								<select class="form-control" name="categoryId" id="m_categoryId">
+									<option selected="selected" value="">无分类</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+						    <label for="inputPassword3" class="col-sm-2 control-label">price</label>
+						    <div class="col-sm-10">
+						      <input type="text" class="form-control" name="price" id="m_price"  placeholder="单价">
+						    </div>
+						  </div>
+						  
+						  <div class="form-group">
+						    <label for="inputPassword3" class="col-sm-2 control-label">number</label>
+						    <div class="col-sm-10">
+						      <input type="text" class="form-control" name="pnum" id="m_pnum"  placeholder="数量">
+						    </div>
+						  </div>
+						  
+						  <div class="form-group">
+						    <label for="inputEmail3" class="col-sm-2 control-label">title image</label>
+						    <div class="col-sm-10">
+							    <input title="img" multiple="" type="file" name="img" id="m_image">
+						    </div>
+						  </div>
+						  
+						  <div class="form-group">
+						    <label for="inputPassword3" class="col-sm-2 control-label">description</label>
+						    <div class="col-sm-10">
+						      <input type="text" class="form-control" name="description" id="m_description"  placeholder="描述">
+						   	  <input type="hidden" class="form-control" name="id" id="m_id" value="">
+						    </div>
+						  </div>
+
+
+
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label"></label>
+							<div class="col-sm-10">
+								<p id="add_msg"></p>
+							</div>
+
+						</div>
+
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="r_submit"
+						onclick="add()">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+<!-- Modal 模态框 -->
+	<div class="modal fade" id="product_img_Modal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">添加商品描述图片</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" id="product_img_from">
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">商品名称</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="name" id="p_m_name" disabled="disabled">
+								<input type="hidden" class="form-control" name="id" id="p_m_id" value="">
+							</div>
+						</div>
+
+						
+						  <div class="form-group">
+						    <label for="inputEmail3" class="col-sm-2 control-label">商品描述 image</label>
+						    <div class="col-sm-10">
+							    <input title="img" multiple="" type="file" name="imgs" id="p_m_image">
+						    </div>
+						  </div>
+
+
+
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label"></label>
+							<div class="col-sm-10">
+								<p id="p_m_msg"></p>
+							</div>
+
+						</div>
+
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="p_m_submit" onclick="add_desc_img()">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<div id="Title_bar">
+		<div id="Title_bar_Head">
+			<div id="Title_Head"></div>
+			<div id="Title">
+				<!--页面标题-->
+				<img border="0" width="13" height="13"
+					src="../../style/images/title_arrow.gif" /> 商品管理 
+					<select name = "category" id="index_category_select" onchange="select_category(this)">
+					<option  selected="selected" value = "all"> 全部</option>
+					</select>
+			</div>
+			<div id="Title_End"></div>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+
+
+
+
+
+		<div class="row">
+			<div class="col-md-12">
+				<table class="table table-hover table-striped">
+					<thead>
+						<tr>
+							<td>商品id</td>
+							<td>商品名称</td>
+							<td>商品类别</td>
+							<td >商品单价</td>
+							<td >商品库存</td>
+							<td >标题图片</td>
+							<td >商品描述</td>
+							<td>相关操作</td>
+						</tr>
+					</thead>
+
+					<!--显示数据列表-->
+					<tbody id="TableData" class="dataContainer" datakey="productList">
+						
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-4">
+				<button type="button" class="btn btn-primary btn-xs"
+					onclick="add_page()">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加
+				</button>
+			</div>
+			
+			<div class="col-md-2" id="page_info">
+			</div>
+			
+			<div class="col-md-6" id="page_nav_area"></div>
+		</div>
+
+		<!-- 分页信息-->
+
+		<div class="row">
+			<div class="col-md-4" id="page_info"></div>
+			<div class="col-md-2"></div>
+			<div class="col-md-6" id="page_nav_area"></div>
+
+		</div>
+
+
+
+
+	</div>
+
+	<!--说明-->
+	<div id="Description">
+		说明：<br /> 1，列表页面只显示一层的（同级的）部门数据，默认显示最顶级的部门列表。<br />
+		2，点击部门名称，可以查看此部门相应的下级部门列表。<br /> 3，删除部门时，同时删除此部门的所有下级部门。
+	</div>
+
+</body>
+</html>
